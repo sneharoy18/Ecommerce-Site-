@@ -1,0 +1,98 @@
+{% extends 'store/main.html'%}
+{% load static %}
+{% block content%}
+<h1 style="margin :auto; text-align: center; font-weight: bold; color: black;">Order's History</h1><hr>
+<div class="row">
+        <div class="col-lg-12">
+            <div class="box-element">
+            	<div class="cart-row">
+            		<div style="flex:2;">
+            			
+						<div class="dropdown">
+							<button class="btn btn-secondary dropdown-toggle blurbutton" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Search
+							</button>
+							<div class="dropdown-menu searchunblur  searchdropdown" aria-labelledby="dropdownMenuButton" style="width:400%;">
+									<div class="col">
+									<h5 style="margin-left: 20px;">Seach Order's</h5>
+									<div class="card card-body">
+									<form method="get">
+										<div class="cart-row">
+											<div class="search" style="flex:1;margin-left: 30px;"><strong>Transaction Id</strong></div>
+											<div class="search" style="flex:1;"><strong>Status</strong></div>
+											<div class="search" style="flex:1;"><strong>After Date</strong></div>
+											<div class="search" style="flex:1;"><strong>Before Date</strong></div>
+										</div>
+										<div class="cart-row">
+											<div class="search" style="flex:1;"><strong>{{myFilter.form.transaction_id}}</strong></div>
+											<div class="search" style="flex:1;"><strong>{{myFilter.form.status}}</strong></div>
+											<div class="search" style="flex:1;"><strong>{{myFilter.form.start_date}}</strong></div>
+											<div class="search" style="flex:1;"><strong>{{myFilter.form.end_date}}</strong></div>
+										</div>
+										<button class="btn btn-primary unblurbutton" type="submit">Search</button>
+										</form>
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+            		</div>
+            		<div style="flex:2;"><strong>Item</strong></div>
+            		<div style="flex:1;"><strong>Price</strong></div>
+            		<div style="flex:1;"><strong>Quantity</strong></div>
+            		<div style="flex:1;"><strong>Total</strong></div>
+            	</div>
+            </div>
+            <div class="box-element">
+                {% for x in item %}
+               
+            <div class="havetoblur">
+				{% for i in  x %}
+				{% if forloop.first %}
+				<div class="dropdown">
+	            <button class="btn btn-sm btn-secondary dropdown-toggle dropdown-toggle-split" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	              Order Details
+	            </button>
+	           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+	              <p>Order Id:  {{i.order.id}}</p>
+				  <p>Order Date:  {{i.order.date_order}}</p>
+				  <p>Trnx Id: {{i.order.transaction_id}}</p>
+	            </div>
+                <span class="status" style="  background-color: lightgreen; ">{{i.order.status}}</span>
+               </div>
+
+            	{% endif %}
+            	<div class="cart-row">
+            		<div style="flex:2;"><a href = "{% url 'product_views' i.product.id %}"><img class="row-image" src="{{i.product.imageURL}}"></a></div>
+            		<div style="flex:2;">{{i.product.name}}</div>
+            		<div style="flex:1;">Rs. {{i.product.price|floatformat:2}}</div>
+            		<div style="flex:1;">
+            			<p class="quantity" style="margin-left: 15px;">{{i.quantity}}</p>
+            		</div>
+            		<div style="flex:1;">Rs. {{i.get_total}}</div>
+            	</div>
+            	{% endfor %}
+            	<hr style="border-top: 1px solid #80dfff ;">
+            </div>
+                {% endfor %}
+            </div>
+            
+        </div>
+</div>
+
+
+
+
+
+<!--
+
+
+{% for i in item %}
+{% for x in  i%}
+<div style="flex:2;"><img class="row-image" src="{{x.product.imageURL}}"></div>
+{% endfor %}
+{% endfor %}
+-->
+{% endblock content %}
+
